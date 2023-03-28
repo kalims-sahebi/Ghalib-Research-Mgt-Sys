@@ -1,0 +1,64 @@
+﻿@model LoginViewModel
+
+@{ 
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en" dir="rtl">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>ورود به سیستم</title>
+    <link href="~/lib/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="~/lib/Ionicons/css/ionicons.css" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/slim.css?v=99">
+
+</head>
+<body>
+
+    <form method="post" asp-controller="Account" asp-action="Login">
+        <div class="signin-wrapper">
+
+            <div class="signin-box">
+                <h3 class="mb-2 text-center">
+                    <img src="~/img/ghalib.png" />
+                </h3>
+                <h5 class="mb-4 text-center">برای ادامه وارد شوید</h5>
+
+                @if (TempData["ErrorMessage"] != null)
+                {
+                <div class="alert alert-danger mg-b-0 mb-2" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <strong>خطا!</strong> @TempData["ErrorMessage"]
+                </div>
+                }
+
+                <div class="form-group">
+                    <input type="text" required class="form-control" placeholder="یوزر نیم" asp-for="UserName">
+                </div>
+                <!-- form-group -->
+                <div class="form-group">
+                    <input type="password" required class="form-control" placeholder="رمز" asp-for="Password">
+                </div>
+                <!-- form-group -->
+                <div class="form-group">
+                    <input type="checkbox" class="custom-control-input" id="customSwitchSuccess">
+                    <label class="custom-control-label text-muted" for="customSwitchSuccess" asp-for="RememberMe">به خاطر بسپارم؟</label>
+                </div>
+                <!-- form-group -->
+                <button type="submit" class="btn btn-primary btn-block btn-signin">ورود</button>
+            </div>
+            <!-- signin-box -->
+
+        </div><!-- signin-wrapper -->
+    </form>
+
+    <script src="../lib/jquery/js/jquery.js"></script>
+    <script src="../lib/popper.js/js/popper.js"></script>
+    <script src="../lib/bootstrap/js/bootstrap.js"></script>
+    <script src="../js/slim.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,83 @@
+﻿@model AddOrEditSentArticleViewModel
+
+<div class="row mg-b-5">
+    <div class="col-lg-3">
+        <div class="form-group">
+            <label class="form-control-label float-right">سازمان</label>
+            <input class="form-control" type="text" disabled value="@Model.SentArticle.OrganizationName" autocomplete="off">
+        </div>
+
+    </div>
+
+    <div class="col-lg-3">
+        <div class="form-group">
+            <label class="form-control-label float-right">مقاله</label>
+            <select class="form-control select2 " asp-items="Model.Article" id="ArticleId" name="ArticleId" tabindex="1" aria-hidden="true">
+                <option label="انتخاب مقاله"></option>
+            </select>
+        </div>
+    </div>
+
+    <div class="col-lg-3">
+        <div class="form-group">
+            <label class="form-control-label float-right">تاریخ ارسال</label>
+            <input class="form-control shamsi-date-picker" type="text" value="@(new ShamisDateTime.PersianDateTime(Model.SentArticle.SentDate).ToShortDateString())" name="SentDateString" id="SentDateString" autocomplete="off">
+        </div>
+    </div>
+
+    <div class="col-lg-3">
+        <div class="form-group">
+            <label class="form-control-label float-right">تعداد کاپی</label>
+            <input class="form-control" type="text" value="@Model.SentArticle.CopiesCount" name="CopiesCount" id="CopiesCount" autocomplete="off">
+        </div>
+    </div>
+</div>
+<input type="hidden" id="SentArticleId" value="@Model.SentArticle.SentArticleId" />
+<div class="row mg-b-5">
+    <div class="col-lg-3">
+        <button id="btnSubmit" class="btn btn-primary float-right">ثبت</button>
+        <a class="btn btn-secondary float-right" href="~/SentArticle/SentArticleList" >لغو</a>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/plugins/shamsidatepicker/datepicker.min.js"></script>
+    <script>
+
+        $(document).ready(function () {
+            $("input.shamsi-date-picker").persianDatepicker({ showGregorianDate: !1 });
+
+            $("button#btnSubmit").click(function () {
+                var checkedList = [];
+
+                var o = {
+                    SentArticleId: $("#SentArticleId").val(),
+                    ArticleId: $("#ArticleId").val(),
+                    SentDateString: $("#SentDateString").val(),
+                    CopiesCount: $("#CopiesCount").val()
+                };
+                checkedList.push(o);
+
+                $.ajax({
+                url: "@Url.Action("EditSentArticlePost", "SentArticle")",
+                type: "POST",
+                cache: false,
+                contentType: "application/json;charset=utf-8",
+                dataType: "html",
+                data: JSON.stringify(checkedList),
+                    success: function (data) {
+
+                           @* @Url.Action("Index","SentArticle");*@
+                             location.href = '@Url.Action("SentArticleList", "SentArticle")'
+                    },
+                    error: function (errormessage) {
+                        alert(errormessage.responseText);
+                    }
+                });
+
+            });
+
+        });
+    </script>
+}
+

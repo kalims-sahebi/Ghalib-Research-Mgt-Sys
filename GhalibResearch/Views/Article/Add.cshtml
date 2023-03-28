@@ -1,0 +1,482 @@
+﻿@model AddOrEditArticleViewModel
+
+<div class="section-wrapper tx-right" name="mydata">
+
+    @if (TempData["Message"] != null)
+    {
+        <div class="alert alert-info" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+            <strong>پیام!</strong> @TempData["Message"]
+        </div>
+    }
+
+    <form method="post" asp-controller="Article" asp-action="Add" enctype="multipart/form-data">
+        <div class="form-layout">
+
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label class="form-control-label">نوع تحقیق</label>
+                        <select class="form-control" asp-items="Model.ArticleTypeList" name="ArticleTypeId" id="ArticleTypeId"></select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mg-b-5">
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <label class="form-control-label">عنوان مقاله</label>
+                        <span asp-validation-for="@Model.AddModel.ArticleTitle" class="danger"></span>
+                        <input class="form-control" type="text" name="ArticleTitle" required placeholder="عنوان" autocomplete="off">
+                    </div>
+                </div><!-- col-6 -->
+            </div>
+
+            <div class="row mg-b-5">
+
+
+                <div class="col-lg-3" id="AcademicCouncilProtocolNumber">
+                    <div class="form-group">
+                        <label class="form-control-label">نمبر پروتوکول شورای علمی</label>
+                        <input class="form-control" type="text"  name="AcademicCouncilProtocolNumber" autocomplete="off">
+                    </div>
+                </div>
+                <div class="col-lg-3" id="AcademicCouncilProtocolDateString" >
+                    <div class="form-group">
+                        <label class="form-control-label">تاریخ پروتوکل شورای علمی</label>
+                        <input class="form-control shamsi-date-picker" type="text"  name="AcademicCouncilProtocolDateString" autocomplete="off">
+                    </div>
+                </div>
+
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label class="form-control-label">نمبر پروتوکول  کمیته تحقیقات</label>
+                        <input class="form-control" type="text"  name="ResearchComitteeProtocolNumber" autocomplete="off">
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label class="form-control-label">تاریخ پروتوکل کمیته تحقیقات</label>
+                        <input class="form-control shamsi-date-picker"  type="text" name="ResearchComitteeProtocolDateString" autocomplete="off">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mg-b-5">
+
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label class="form-control-label">کد اخلاقی</label>
+                        <input class="form-control" type="text"  name="EthicCode" autocomplete="off">
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label class="form-control-label">حمایت مالی</label>
+                        <input class="form-control" type="text"  name="Budget" autocomplete="off">
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label class="form-control-label">پوهنځی</label>
+                        <a id="btnAddNewFaculty" href="#" type="button" class="fa fa-plus-circle" data-toggle="modal" data-target="#add-faculty"></a>
+                        <select class="form-control select2 " asp-items="Model.FacultyList" name="FacultyId" id="Faculty"></select>
+                    </div>
+                </div><!-- col-3 -->
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label class="form-control-label">دیپارتمنت</label>
+                        <a id="btnAddNewDepartment" href="#" type="button" class="fa fa-plus-circle" data-toggle="modal" data-target="#add-department"></a>
+                        <select class="form-control select2 " asp-items="Model.DepartmentList" name="DepartmentId" id="Department"></select>
+                    </div>
+                </div><!-- col-3 -->
+                @*<div class="col-lg-3">
+            <div class="form-group">
+                <label class="form-control-label">سال تحصیلی</label>
+                <input class="form-control shamsi-date-picker" type="text" name="AcademicYearString" autocomplete="off">
+            </div>
+        </div>*@
+            </div>
+
+            <div class="row mg-b-5">
+
+               
+
+                @*<div class="col-lg-3">
+            <div class="form-group">
+                <label class="form-control-label">
+                    مضمون
+                    <a id="btnAddNewSubject" href="#" type="button" class="fa fa-plus-circle" data-toggle="modal" data-target="#add-subject"></a>
+                </label>
+                <select class="form-control select2" asp-items="Model.SubjectList" id="subjectList" name="SubjectId"></select>
+            </div>
+        </div>*@
+
+                <!-- col-3 -->
+            </div><!-- row -->
+            <div class="row mg-b-5">
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label class="form-control-label">سال نشر</label>
+                        <input class="form-control" type="text" required name="PublishedYearString" autocomplete="off">
+                    </div>
+                </div>
+
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label class="form-control-label">شماره مجله</label>
+                        <input class="form-control" type="text"  name="ChapterStartingNumber" autocomplete="off">
+                    </div>
+                </div>
+                @*<div class="col-lg-3">
+                <div class="form-group">
+                    <label class="form-control-label">شماره فصلنامه (تا)</label>
+                    <input class="form-control" type="text" name="ChapterEndingNumber" autocomplete="off">
+                </div>
+            </div>*@
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label class="form-control-label">تاریخ آغاز تحقیق</label>
+                        <input class="form-control shamsi-date-picker"  type="text" name="StartingYearString" autocomplete="off">
+                    </div>
+                </div><!-- col-3 -->
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label class="form-control-label">تاریخ پایان تحقیق</label>
+                        <input class="form-control shamsi-date-picker"  type="text" name="EndingYearString" autocomplete="off">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mg-b-5 justify-content-end">
+
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label class="form-control-label">چاپ شده در ژورنال</label>
+                        <input class="form-control" type="text"  name="PublishedInJournal" autocomplete="off">
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label asp-for="@Model.AddModel.AbstractFile" class="form-control-label">فایل چکیده</label>
+                        <input class="form-control " asp-for="@Model.AddModel.AbstractFile" type="file"  name="AbstractFile" autocomplete="off">
+                        <span asp-validation-for="@Model.AddModel.AbstractFile"></span>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label class="form-control-label">فایل کامل</label>
+                        <input class="form-control" type="file"  name="DocumentFile">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr />
+
+        <button id="btnAddNewMember" type="button" class="btn btn-info btn-sm bd-0" data-toggle="modal" data-target="#add-member"> <i class="fa fa-plus-circle"></i> افزودن عضو جدید</button>
+
+        <fieldset>
+            <div class="repeater-custom-show-hide">
+                <div data-repeater-list="Member">
+                    <div data-repeater-item="">
+                        <div class="form-group row d-flex align-items-end">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>انتخاب عضو</label>
+                                    <select class="select2 form-control" id="MySelect" name="Member[0][MemberId]" asp-items="Model.Member" tabindex="1" aria-hidden="true"></select>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label class="form-control-label">نوع عضویت</label>
+                                    <select class="form-control select2 " asp-items="Model.MemberType" name="Member[0][MemberTypeId]" id="MemberTypeId" tabindex="1" aria-hidden="true">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="form-control-label">رول</label>
+                                    <select class="form-control select2 " asp-items="Model.Role" name="Member[0][RoleId]" id="RoleId" tabindex="1" aria-hidden="true">
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <span data-repeater-delete="" class="btn btn-link text-danger">
+                                        <span class="fa fa-times"></span> حذف
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <span data-repeater-create="" class="btn btn-link text-primary">
+                                        <span class="fa fa-plus"></span> افزودن
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+
+        <hr />
+
+        <div class="form-layout-footer">
+            <button type="submit" class="btn btn-primary"> <i class="fa fa-save"></i> ثبت مقاله </button>
+        </div>
+    </form>
+    @await Html.PartialAsync("AddMember")
+    @await Html.PartialAsync("AddFaculty")
+    @await Html.PartialAsync("AddDepartment")
+    
+
+
+
+
+    @* Subject Start *@
+
+    @* <div class="modal fade" id="add-subject" tabindex="-1" role="dialog" aria-labelledby="addSubjectLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addSubjectLabel">افزودن مضمون</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label class="form-control-label">نام مضمون </label>
+                            <input class="form-control " type="text" name="SubjectName" id="SubjectName" autocomplete="off">
+                        </div>
+                        <div class="modal-footer float-right">
+                            <button type="button" id="btnsubjectform" class="btn btn-primary" data-dismiss="modal">ثبت</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>*@
+    @* Subject End *@
+</div>
+
+@section scripts{
+    <script src="~/plugins/shamsidatepicker/datepicker.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.select2').select2();
+            $("#ArticleTypeId").change(function () {
+                if ($("#ArticleTypeId").val() == 13) {
+                    $("#AcademicCouncilProtocolNumber").hide();
+                    $("#AcademicCouncilProtocolDateString").hide();
+                }
+                else {
+                    $("#AcademicCouncilProtocolNumber").show();
+                    $("#AcademicCouncilProtocolDateString").show();
+                }
+            });
+           
+            $("input.shamsi-date-picker").persianDatepicker({ showGregorianDate: !1 });
+
+            $('#Faculty').change(function () {
+                var o2 = {
+                    FacultyId: parseInt($(this).val())
+                };
+                var a = JSON.stringify(o2);
+                 $.ajax({
+                    url: "@Url.Action("GetDepartmentByFaculty", "Article")",
+                    type: "POST",
+                    cache: false,
+                    data: a,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "Json",
+                    success: function (data) {
+                        var subjectSelect = $('#Department');
+                        if (data != null && !jQuery.isEmptyObject(data)) {
+                            subjectSelect.empty();
+                            $.each(data, function (index, field) {
+                                subjectSelect.append("<option value='" + field.value + "'>" + field.text + "</option>");
+                            });
+                        };
+                    },
+                    error: function (errormessage) {
+                        alert(errormessage.responseText);
+                    }
+                });
+            });
+
+            $("button#btnSubmitform").click(function () {
+                var dt = [];
+                var o = {
+                    FullName: $("#FullName").val(),
+                    Email: $("#Email").val(),
+                    PhoneNo: $("#PhoneNo").val(),
+                    DegreeId: parseInt($("#DegreeId").val()),
+                    EducationFieldId: parseInt($("#EducationFieldId").val()),
+                    FacultyId: parseInt($("#FacultyId").val())
+
+                };
+                var a = JSON.stringify(o);
+                $.ajax({
+                    url: "@Url.Action("AddMember", "Article")",
+                    type: "POST",
+                    cache: false,
+                    contentType: "application/json; charset=utf-8",
+                    data: a,
+                    success: function (data) {
+                        $.ajax({
+                            url: "@Url.Action("GetMemberList", "Article")",
+                            type: "POST",
+                            cache: false,
+                            contentType: "application/json; charset=utf-8",
+                            success: function (data) {
+                                var subjectSelect = $('#MySelect');
+                                if (data != null && !jQuery.isEmptyObject(data)) {
+                                    subjectSelect.empty();
+                                    subjectSelect.append($('<option />', {
+                                        value: null,
+                                        text: "---انتخاب عضو---"
+                                    }));
+                                    $.each(data, function (index, field) {
+                                        subjectSelect.append("<option value='" + field.value + "'>" + field.text + "</option>");
+                                    });
+                                };
+                            },
+                            error: function (errormessage) {
+                                alert(errormessage.responseText);
+                            }
+                        });
+                    },
+                    error: function (errormessage) {
+                        alert(errormessage.responseText);
+                    }
+
+                });
+            });
+        });
+
+         @*<---Adding Faculty--->*@
+
+        $('#btnFacultyform').click(function () {
+            $.when(sb()).done(function (a1) {
+              ls();
+            });
+
+        });
+        function sb() {
+            var o2 = {
+                FacultyName: $("#FacultyName").val(),
+                FacultyNameEnglish: $("#FacultyNameEnglish").val()
+            };
+            var a = JSON.stringify(o2);
+            $.ajax({
+                url: "@Url.Action("AddFaculty", "Article")",
+                type: "POST",
+                cache: false,
+                contentType: "application/json; charset=utf-8",
+                data: a,
+                success: function (data) {
+                    alert(data.message);
+                    ls();
+                },
+                error: function (errormessage) {
+                    alert(errormessage.responseText);
+                }
+            });
+        }
+
+        function ls() {
+            $.ajax({
+                url: "@Url.Action("GetFacultyList", "Article")",
+                type: "POST",
+                cache: false,
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    var facultySelect = $('#Faculty');
+                    if (data != null && !jQuery.isEmptyObject(data)) {
+                        facultySelect.empty();
+                        facultySelect.append($('<option />', {
+                            value: null,
+                            text: "---انتخاب پوهنځی---"
+                        }));
+                        $.each(data, function (index, field) {
+                            facultySelect.append("<option value='" + field.value + "'>" + field.text + "</option>");
+                        });
+                    };
+                },
+                error: function (errormessage) {
+                    alert(errormessage.responseText);
+                }
+            });
+        }
+
+        @*<---Adding Faculty End--->*@
+
+
+
+
+
+        @*<--Adding Department-->*@
+        $('#btnDepartmentform').click(function () {
+            $.when(dp()).done(function (a1) {
+              lsdp();
+            });
+
+        });
+        function dp() {
+            var o2 = {
+                DepartmentName: $("#DepartmentName").val(),
+                FacultyId: $("#Faculty").val()
+            };
+            var a = JSON.stringify(o2);
+            $.ajax({
+                url: "@Url.Action("AddDepartment", "Article")",
+                type: "POST",
+                cache: false,
+                contentType: "application/json; charset=utf-8",
+                data: a,
+                success: function (data) {
+                    alert(data.message);
+                    lsdp();
+                },
+                error: function (errormessage) {
+                    alert(errormessage.responseText);
+                }
+            });
+        }
+
+        function lsdp() {
+            var o2 = {
+                FacultyId: $("#Faculty").val()
+            };
+            var a = JSON.stringify(o2);
+            $.ajax({
+                url: "@Url.Action("GetDepartmentByFaculty", "Article")",
+                type: "POST",
+                cache: false,
+                contentType: "application/json; charset=utf-8",
+                data:a,
+                success: function (data) {
+                    var departmentSelect = $('#Department');
+                    if (data != null && !jQuery.isEmptyObject(data)) {
+                        departmentSelect.empty();
+                        departmentSelect.append($('<option />', {
+                            value: null,
+                            text: "---انتخاب دیپارتمنت---"
+                        }));
+                        $.each(data, function (index, field) {
+                            departmentSelect.append("<option value='" + field.value + "'>" + field.text + "</option>");
+                        });
+                    };
+                },
+                error: function (errormessage) {
+                    alert(errormessage.responseText);
+                }
+            });
+        }
+
+    </script>
+}

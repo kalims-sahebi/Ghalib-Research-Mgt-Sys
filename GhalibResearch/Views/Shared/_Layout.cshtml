@@ -1,0 +1,142 @@
+﻿<!DOCTYPE html>
+<html lang="en" dir="rtl">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>سیستم تحقیقات غالب</title>
+    <link href="~/lib/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <link href="~/lib/Ionicons/css/ionicons.css" rel="stylesheet">
+    <link href="~/lib/datatables/css/jquery.dataTables.css" rel="stylesheet">
+    <link href="~/lib/select2/css/select2.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/slim.css?v=4">
+    <link href="~/plugins/shamsidatepicker/datepicker.css?v=50" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+    <div class="slim-header">
+        <div class="container">
+            <div class="slim-header-left">
+                <h2 class="slim-logo"><a asp-action="Index" asp-controller="Home">سیستم معلوماتی تحقیقات غالب</a></h2>
+
+                <div class="search-box">
+                    <input type="text" class="form-control" placeholder="Search">
+                    <button class="btn btn-primary"><i class="fa fa-search"></i></button>
+                </div>
+            </div>
+            <div class="slim-header-right">
+
+                <div class="dropdown dropdown-c">
+                    <a href="#" class="logged-user" data-toggle="dropdown">
+                        <span>@User.Identity.Name</span>
+                        <i class="fa fa-angle-down"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <nav class="nav">
+                            <a asp-action="Logout" asp-controller="Account" class="nav-link"><i class="icon ion-forward"></i> خروج از سیستم</a>
+                        </nav>
+                    </div><!-- dropdown-menu -->
+                </div><!-- dropdown -->
+            </div><!-- header-right -->
+        </div><!-- container -->
+    </div><!-- slim-header -->
+
+    <div class="slim-navbar">
+        <div class="container">
+            <ul class="nav">
+                <li class="nav-item with-sub">
+                    <a class="nav-link" asp-action="Add" asp-controller="Article">
+                        <i class="icon ion-ios-paper"></i>
+                        <span>افزودن مقالات</span>
+                    </a>
+                </li>
+
+                <li class="nav-item with-sub">
+                    <a class="nav-link" asp-action="List" asp-controller="Article">
+                        <i class="icon ion-ios-paper"></i>
+                        <span>لست مقالات</span>
+                    </a>
+                    <div class="sub-item">
+                        <ul>
+                            <li><a asp-action="List" asp-controller="Article" asp-route-id="10">پروژه تحقیقی پوهنتون</a></li>
+                            <li><a asp-action="List" asp-controller="Article" asp-route-id="11">مقالات ژورنال غالب</a></li>
+                            <li><a asp-action="List" asp-controller="Article" asp-route-id="12">مقالات مجله غالب</a></li>
+                            <li><a asp-action="List" asp-controller="Article" asp-route-id="13">مقالات بیرونی</a></li>
+                        </ul>
+                    </div><!-- sub-item -->
+                </li>
+
+                <li class="nav-item with-sub">
+                    <a class="nav-link" asp-action="Index" asp-controller="SentArticle">
+                        <i class="icon ion-ios-briefcase-outline"></i>
+                        <span>ارسال مقالات</span>
+                    </a>
+                </li>
+
+                <li class="nav-item with-sub">
+                    <a class="nav-link" asp-action="SentArticleList" asp-controller="SentArticle">
+                        <i class="icon ion-ios-briefcase-outline"></i>
+                        <span>مقالات ارسال شده</span>
+                    </a>
+                </li>
+
+                <li class="nav-item with-sub">
+                    <a class="nav-link" asp-action="Add" asp-controller="Organization">
+                        <i class="icon ion-ios-briefcase-outline"></i>
+                        <span>افزودن سازمان</span>
+                    </a>
+                </li>
+
+                <li class="nav-item with-sub">
+                    <a class="nav-link" href="#">
+                        <i class="icon ion-ios-briefcase-outline"></i>
+                        <span>راپور مقالات</span>
+                    </a>
+                    <div class="sub-item">
+                        <ul>
+                            <li><a asp-action="ResearchProjectRPT" asp-controller="Article" >پروژه تحقیقی پوهنتون</a></li>
+                            <li><a asp-action="GhalibJournalArticleRPT" asp-controller="Article" >مقالات ژورنال غالب</a></li>
+                            <li><a asp-action="GhalibQuarterlyJournalRPT" asp-controller="Article" >مقالات مجله غالب</a></li>
+                            <li><a asp-action="ExternalArticleRPT" asp-controller="Article" >مقالات بیرونی</a></li>
+                        </ul>
+                    </div><!-- sub-item -->
+                </li>
+
+            </ul>
+        </div>
+    </div>
+
+    <div class="slim-mainpanel">
+        <div class="container">
+            <div class="slim-pageheader pd-10">
+                <ol class="breadcrumb slim-breadcrumb">
+                    <li class="breadcrumb-item active" aria-current="page">@ViewContext.RouteData.Values["action"].ToString()</li>
+                    <li class="breadcrumb-item">@ViewContext.RouteData.Values["controller"].ToString()</li>
+                </ol>
+            </div>
+            <div class="section-wrapper">@RenderBody()</div>
+        </div>
+    </div>
+
+    <div class="slim-footer">
+        <div class="container">
+            <p>Copyright @DateTime.Now.Year &copy; All Rights Reserved. </p>
+            <p>Developed by: <a href="#">Kalim at Ghalib MIS</a></p>
+        </div><!-- container -->
+    </div><!-- slim-footer -->
+
+    <script src="~/lib/jquery/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/lib/jquery/js/jquery.js"></script>
+    <script src="~/lib/popper.js/js/popper.js"></script>
+    <script src="~/lib/bootstrap/js/bootstrap.js"></script>
+    <script src="~/lib/datatables/js/jquery.dataTables.js"></script>
+    <script src="~/lib/datatables-responsive/js/dataTables.responsive.js"></script>
+    <script src="~/lib/select2/js/select2.min.js"></script>
+    <script src="~/js/jquery.repeater.min.js"></script>
+    <script src="~/js/jquery.form-repeater.js"></script>
+    <script src="~/js/slim.js"></script>
+    @RenderSection("scripts", false)
+
+</body>
+</html>

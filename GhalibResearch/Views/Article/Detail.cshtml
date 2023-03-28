@@ -1,0 +1,19 @@
+﻿
+@model ArticleDetailViewModel
+
+<div class="row">
+    <div class="col-6 ">
+        <div class="float-right">
+            <object data="@Model.DocumentFile" width="350" height="450"></object>
+        </div>
+    </div>
+
+    <div class="col-6 text-right">
+        <h3>عنوان :@Model.ArticleTitle </h3>
+        <h3>محقق: @Model.Researchers </h3>
+        <h3>همکاران: @Model.CoResearchers </h3>
+        <h3>نوعیت مقاله: @Model.ArticleTypeDari </h3>
+        <h3>از سال: @(new ShamisDateTime.PersianDateTime(Model.StartingYear).ToShortDateString()) </h3>
+        <h3>تا سال :@(new ShamisDateTime.PersianDateTime(Model.EndingYear).ToShortDateString()) </h3>
+    </div>
+</div>

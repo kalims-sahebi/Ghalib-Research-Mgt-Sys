@@ -1,0 +1,28 @@
+﻿@model AddOrEditOrganizationViewModel
+
+<div class="row">
+    <div class="col-md-12">
+        <form method="post" asp-controller="Organization" asp-action="EditOrganization" novalidate>
+            <div class="form-layout">
+                <div class="row mg-b-25">
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <input type="hidden" value="@Model.EditModel.OrganizationId" name="OrganizationId" />
+                            <label class="form-control-label float-right">نام سازمان</label>
+                            <input class="form-control" type="text" name="OrganizationName" value="@Model.EditModel.OrganizationName" placeholder="Type here...">
+                            @*<span class="tx-danger" asp-validation-for="organization.OrganizationName"></span>*@
+                        </div>
+                    </div><!-- col-4 -->
+
+                </div><!-- row -->
+
+                <div class="form-layout-footer">
+                    <button class="btn btn-primary bd-0 float-lg-right" type="submit">ثبت</button>
+                    <a class="btn btn-secondary bd-0 float-lg-right" href="~/Organization/Add" >لغو</a>
+                </div><!-- form-layout-footer -->
+            </div>
+        </form>
+    </div>
+    <!-- Organization Table -->
+
+</div>

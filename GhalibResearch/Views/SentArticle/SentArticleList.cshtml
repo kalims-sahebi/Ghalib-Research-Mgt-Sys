@@ -1,0 +1,71 @@
+﻿@model AddOrEditSentArticleViewModel
+
+
+<div class="section-wrapper">
+    <div class="table-wrapper">
+        <div id="datatable1_wrapper" class="dataTables_wrapper no-footer">
+            <div id="datatable1_wrapper" class="dataTables_wrapper no-footer">
+
+            </div><table id="datatable1" class="table display responsive nowrap dataTable no-footer dtr-inline" role="grid" aria-describedby="datatable1_info" style="width: 1032px;">
+
+                <thead>
+                    <tr role="row">
+                        <th class="wd-15p sorting">شماره</th>
+                        <th class="wd-15p sorting">عنوان مقاله</th>
+                        <th class="wd-15p sorting">سازمان</th>
+                        <th class="wd-15p sorting">تعداد کاپی</th>
+                        <th class="wd-20p sorting">تاریخ ارسال</th>
+                        <th class="wd-20p sorting">عملیات</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{int num = 1; }
+                    @foreach (var temp in Model.SentArticleList)
+                    {
+                        <tr role="row" class="even">
+                            <td>@num</td>
+                            <td>@temp.ArticleTitle</td>
+                            <td>@temp.OrganizationName</td>
+                            <td>@temp.CopiesCount</td>
+                            <td>@(new ShamisDateTime.PersianDateTime(temp.SentDate).ToShortDateString())</td>
+                            <td>
+                                <a asp-action="DeleteSentArticle" asp-route-id="@temp.SentArticleId" onclick="return confirm('Are you sure?')"><i class="icon ion-trash-a font-16"></i></a>
+                                <a asp-action="EditSentArticle" asp-route-id="@temp.SentArticleId" class="mr-2"><i class="icon ion-edit font-16"></i></a>
+                            </td>
+                        </tr>
+                        num++;
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div><!-- table-wrapper -->
+</div>
+
+@section scripts{
+
+    <script>
+        $(function () {
+            'use strict';
+
+            $('#datatable1').DataTable({
+                responsive: true,
+                language: {
+                    searchPlaceholder: 'Search...',
+                    sSearch: '',
+                    lengthMenu: '_MENU_ مقاله در یک صفحه',
+                }
+            });
+
+            $('#datatable2').DataTable({
+                bLengthChange: false,
+                searching: false,
+                responsive: true
+            });
+
+            // Select2
+            $('.dataTables_length select').select2({ minimumResultsForSearch: Infinity });
+
+        });
+    </script>
+
+}

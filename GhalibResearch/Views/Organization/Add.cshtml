@@ -1,0 +1,92 @@
+﻿@model AddOrEditOrganizationViewModel
+
+@{
+    Layout = "_Layout";
+}
+
+@if (Model.EditModel != null)
+{
+    <div class="row">
+        <div class="col-md-12">
+            <form method="post" asp-controller="Organization" asp-action="EditOrganization">
+                <input type="hidden" value="@Model.EditModel.OrganizationId" name="OrganizationId" />
+                <div class="form-layout">
+                    <div class="form-group">
+                        <label class="form-control-label float-right">نام سازمان</label>
+                        <input class="form-control" type="text" name="OrganizationName" value="@Model.EditModel.OrganizationName" placeholder="Type here...">
+                        
+                    </div>
+
+                    <div class="form-layout-footer">
+                        <button class="btn btn-primary bd-0 float-lg-right" type="submit"> <i class="fa fa-edit"></i> ویرایش نام </button>
+                        <a class="btn btn-secondary bd-0 float-lg-right" asp-action="Add" asp-controller="Organization"> <i class="fa fa-backward"></i> انصراف </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+}
+else
+{
+    <div class="row">
+        <div class="col-md-12">
+            <form method="post" asp-controller="Organization" asp-action="Add" novalidate>
+                <div class="form-layout">
+                    <div class="form-group">
+                        <label  asp-for="@Model.AddModel.OrganizationName" class="form-control-label float-right">نام سازمان</label>
+                        <input class="form-control" type="text" asp-for="@Model.AddModel.OrganizationName" name="OrganizationName" placeholder="...اینجا بنویسید">
+                        <span asp-validation-for="@Model.AddModel.OrganizationName" class="danger"></span>
+                    </div>
+
+                    <div class="form-layout-footer">
+                        <button class="btn btn-primary bd-0 float-lg-right" type="submit"> <i class="fa fa-plus-circle"></i> افزودن سازمان </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+}
+
+<div class="row mt-5">
+    <div class="col-md-12">
+        <table id="datatable1" class="table display responsive nowrap">
+            <thead>
+                <tr>
+                    <th class="wd-5p">شماره</th>
+                    <th>نام سازمان</th>
+                    <th class="wd-5p">عملیات</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{int counter = 0; }
+                @foreach (var item in Model.OrganizationList)
+                {
+                    counter++;
+                    <tr role="row" class="even">
+
+                        <td class="text-right">@counter</td>
+                        <td class="text-right">@item.OrganizationName</td>
+                        <td class="text-right">
+                            <a asp-action="DeleteOrganization" asp-route-id="@item.OrganizationId" onclick="return confirm('Are you sure?')"><i class="fa fa-times"></i></a>
+                            <a asp-action="EditOrganization" asp-route-id="@item.OrganizationId" class="mr-2"><i class="fa fa-edit"></i></a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        $(function () {
+            $('#datatable1').DataTable({
+                responsive: true,
+                language: {
+                    searchPlaceholder: 'جستجو ...',
+                    sSearch: '',
+                    lengthMenu: '_MENU_ مقاله در یک صفحه',
+                }
+            });
+        });
+    </script>
+}

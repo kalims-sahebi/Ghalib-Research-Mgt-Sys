@@ -1,0 +1,78 @@
+﻿@model RegisterViewModel
+
+@{ Layout = null; }
+<!DOCTYPE html>
+<html lang="en" dir="rtl">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>راجستر</title>
+    <link href="../lib/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="../lib/Ionicons/css/ionicons.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/slim.css">
+</head>
+<body>
+
+    <form method="post" asp-controller="Account" asp-action="Register">
+        <div class="signin-wrapper">
+
+            <div class="signin-box signup">
+                <h3 class="mb-2 text-center">
+                    <img src="~/img/ghalib.png" />
+                </h3>
+                <h3 class="mb-1 text-center">راجستر یوزر</h3>
+
+                @if (TempData["ErrorMessage"] != null)
+                {
+                    <div class="alert alert-danger mg-b-0 mb-2" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                        <strong>خطا!</strong> @TempData["ErrorMessage"]
+                    </div>
+                }
+
+                <div class="row row-xs mg-b-10">
+
+
+                    <div class="col-sm">
+                        <input type="text" class="form-control" placeholder="نام کامل" asp-for="FullName">
+                    </div>
+                    <div class="col-sm">
+                        <input type="text" class="form-control" placeholder="ایمیل آدرس" asp-for="Email">
+                    </div>
+
+                </div>
+                <!-- row -->
+
+                <div class="row row-xs mg-b-10">
+
+                    <div class="col-sm">
+                        <input type="text" class="form-control" placeholder="یوزرنیم" asp-for="UserName">
+                    </div>
+                    <div class="col-sm mg-t-10 mg-sm-t-0">
+                        <input type="password" class="form-control" placeholder="رمز" asp-for="Password">
+                    </div>
+
+
+                </div><!-- row -->
+
+                <button type="submit" class="btn btn-primary btn-block btn-signin">راجستر</button>
+
+                <div class="signup-separator"><span>و یا هم وارد سیستم شوید</span></div>
+
+                <p class="mg-t-40 mg-b-0">قبلا راجستر شدید؟ <a href="~/Account/Login">ورود به سیستم</a></p>
+            </div><!-- row -->
+
+
+        </div><!-- signin-box -->
+        <div>
+        </div><!-- signin-wrapper -->
+    </form>
+
+    <script src="../lib/jquery/js/jquery.js"></script>
+    <script src="../lib/popper.js/js/popper.js"></script>
+    <script src="../lib/bootstrap/js/bootstrap.js"></script>
+    <script src="../js/slim.js"></script>
+</body>
+</html>

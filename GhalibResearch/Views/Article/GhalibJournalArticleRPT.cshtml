@@ -1,0 +1,75 @@
+﻿@model AddOrEditArticleViewModel
+    <div id="print">
+        <h2 class="text-center">
+
+            @Model.ArticleTypeDari
+        </h2>
+
+        <div class="table-wrapper">
+            <table class="table display responsive nowrap">
+                <thead>
+                    <tr>
+                        <th>شماره</th>
+                        <th>عنوان</th>
+                        <th>محقق</th>
+                        <th>همکاران محقق</th>
+                        <th>بودجه</th>
+                        <th>سال تحقیق</th>
+                        <th>نمبر پروتوکل کمیته</th>
+                        <th>تاریخ پروتوکل کمیته</th>
+                        <th>چاپ شده در</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.ArticleList != null)
+                    {
+                        int num = 1;
+                        @foreach (var temp in Model.ArticleList)
+                        {
+                            <tr role="row" class="even">
+                                <td>@num</td>
+                                <td>@temp.ArticleTitle</td>
+                                <td>@temp.Researchers</td>
+                                <td>@temp.CoResearchers</td>
+                                <td>@temp.Budget</td>
+                                <td>
+                                    از
+                                    @(new ShamisDateTime.PersianDateTime(@temp.StartingYear).ToShortDateString())
+                                    الی@(new ShamisDateTime.PersianDateTime(@temp.EndingYear).ToShortDateString())
+                                </td>
+                                <td>@temp.ResearchComitteeProtocolNumber</td>
+                                <td> @(new ShamisDateTime.PersianDateTime(@temp.ResearchComitteeProtocolDate).ToShortDateString())</td>
+                                <td>@temp.PublishedInJournal</td>
+                            </tr>
+                            num++;
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="mb-5">
+        <button type="button" id="btnDepartmentform" onclick="printDiv('print')" class="btn btn-primary float-right " data-dismiss="modal">پرنت</button>
+    </div>
+
+
+    @section Scripts{
+        <script>
+
+            $(document).ready(function () {
+
+
+            });
+
+            function printDiv(divName) {
+                var printContents = document.getElementById(divName).innerHTML;
+                var originalContents = document.body.innerHTML;
+
+                document.body.innerHTML = printContents;
+                window.print();
+                document.body.innerHTML = originalContents;
+            }
+
+        </script>
+    }
